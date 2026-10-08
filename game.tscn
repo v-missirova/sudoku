@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://cnufulvaldud"]
+
+[ext_resource type="Script" uid="uid://l8ksneaukkak" path="res://game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://dsm1ac0nhiece" path="res://csp_demo.gd" id="2_csp"]
+
+[node name="Control" type="Control" unique_id=27875079]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_game")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1075599547]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.067, 0.094, 0.145, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=339545826]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameLayout" type="VBoxContainer" parent="CenterContainer" unique_id=761186999]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/GameLayout" unique_id=1874655730]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Sudoku"
+horizontal_alignment = 1
+
+[node name="Toolbar" type="HBoxContainer" parent="CenterContainer/GameLayout" unique_id=2019846377]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Variant" type="OptionButton" parent="CenterContainer/GameLayout/Toolbar"]
+layout_mode = 2
+tooltip_text = "Choose Classic or Jigsaw, then press Generate. Jigsaw uses nine connected regions instead of square boxes."
+focus_mode = 0
+selected = 0
+item_count = 2
+popup/item_0/text = "Classic"
+popup/item_0/id = 0
+popup/item_1/text = "Jigsaw"
+popup/item_1/id = 1
+
+[node name="Difficulty" type="OptionButton" parent="CenterContainer/GameLayout/Toolbar" unique_id=147678674]
+layout_mode = 2
+tooltip_text = "Choose the difficulty for Generate."
+focus_mode = 0
+selected = 0
+item_count = 3
+popup/item_0/text = "Easy"
+popup/item_0/id = 0
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "Hard"
+popup/item_2/id = 2
+
+[node name="Generate" type="Button" parent="CenterContainer/GameLayout/Toolbar" unique_id=410323854]
+layout_mode = 2
+tooltip_text = "Generate new numbers and, for Jigsaw, new regions using the selected difficulty."
+focus_mode = 0
+text = "Generate"
+
+[node name="Hint" type="Button" parent="CenterContainer/GameLayout/Toolbar" unique_id=643061983]
+layout_mode = 2
+tooltip_text = "Reveal one empty or incorrect cell."
+focus_mode = 0
+text = "Hint"
+
+[node name="Solve" type="Button" parent="CenterContainer/GameLayout/Toolbar" unique_id=1087619551]
+layout_mode = 2
+tooltip_text = "Reveal the saved solution, replacing incorrect entries."
+focus_mode = 0
+text = "Solve"
+
+[node name="Lives" type="Label" parent="CenterContainer/GameLayout/Toolbar" unique_id=1533554948]
+layout_mode = 2
+tooltip_text = "Lives remaining"
+text = "3/3"
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/GameLayout" unique_id=159106239]
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 9
+
+[node name="NumberPad" type="HBoxContainer" parent="CenterContainer/GameLayout" unique_id=501854279]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 2
+
+[node name="Tools" type="HBoxContainer" parent="CenterContainer/GameLayout" unique_id=248927199]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Undo" type="Button" parent="CenterContainer/GameLayout/Tools" unique_id=871524184]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+tooltip_text = "Undo (Ctrl+Z)"
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "↶"
+
+[node name="Redo" type="Button" parent="CenterContainer/GameLayout/Tools" unique_id=1737028856]
+custom_minimum_size = Vector2(40, 36)
+layout_mode = 2
+tooltip_text = "Redo (Ctrl+Y / Ctrl+Shift+Z)"
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "↷"
+
+[node name="Spacer" type="Control" parent="CenterContainer/GameLayout/Tools" unique_id=885665870]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Draft" type="Button" parent="CenterContainer/GameLayout/Tools" unique_id=1957199350]
+custom_minimum_size = Vector2(60, 36)
+layout_mode = 2
+tooltip_text = "Toggle pencil numbers. Click a digit again to remove its note."
+focus_mode = 0
+toggle_mode = true
+text = "Draft"
+
+[node name="Feedback" type="AcceptDialog" parent="." unique_id=1038075327]
+title = "Sudoku"
+
+[node name="SudokuNode" type="SudokuNode" parent="." unique_id=1341114814]
+
+[node name="CspDemo" type="Node" parent="." unique_id=1900481383]
+script = ExtResource("2_csp")
+
+[connection signal="pressed" from="CenterContainer/GameLayout/Toolbar/Generate" to="." method="_on_generate_pressed"]
+[connection signal="pressed" from="CenterContainer/GameLayout/Toolbar/Hint" to="." method="hint"]
+[connection signal="pressed" from="CenterContainer/GameLayout/Toolbar/Solve" to="." method="solve_all"]
+[connection signal="pressed" from="CenterContainer/GameLayout/Tools/Undo" to="." method="undo"]
+[connection signal="pressed" from="CenterContainer/GameLayout/Tools/Redo" to="." method="redo"]
+[connection signal="toggled" from="CenterContainer/GameLayout/Tools/Draft" to="." method="_on_draft_toggled"]

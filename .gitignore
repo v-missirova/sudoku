@@ -1,0 +1,18 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+tests
+.vscode
+.idea
+cmake-build*/
+
+/cpp/bin/
+*.o
+*.obj
+*.os
+.sconsign.dblite
+.scons_node_count
+.sconf_temp/
+
+__pycache__/
+*.pyc
